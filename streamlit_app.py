@@ -28,35 +28,23 @@ def main():
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
         
         :root {
-            --primary-color: #2563eb;
-            --primary-light: #dbeafe;
-            --primary-dark: #1e40af;
-            --neutral-50: #f8fafc;
-            --neutral-100: #f1f5f9;
-            --neutral-200: #e2e8f0;
-            --neutral-700: #334155;
-            --neutral-800: #1e293b;
-            --danger: #ef4444;
-            --warning: #f59e0b;
-            --success: #10b981;
-            --success-gradient: linear-gradient(135deg, #059669 0%, #047857 100%);
-            --warning-gradient: linear-gradient(135deg, #d97706 0%, #b45309 100%);
-            --caution-gradient: linear-gradient(135deg, #dc2626 0%, #b91c1c 100%);
-            --danger-gradient: linear-gradient(135deg, #7f1d1d 0%, #991b1b 100%);
+            /* Use Streamlit's CSS variables for theming */
+            --primary-color: var(--primary-color, #2563eb);
+            --background-color: var(--background-color, #ffffff);
+            --secondary-background-color: var(--secondary-background-color, #f8fafc);
+            --text-color: var(--text-color, #0F172A);
+            --font: 'Inter', sans-serif;
         }
 
-        .stApp {
-            background-color: var(--neutral-50);
-        }
-
+        /* Update component styles to use theme variables */
         .main-header {
             padding: 2rem 0;
             margin: 1rem 0 2rem 0;
         }
 
         .header-title {
-            color: var(--neutral-800);
-            font-family: 'Inter', sans-serif;
+            color: var(--text-color);
+            font-family: var(--font);
             font-size: 2.25rem;
             font-weight: 700;
             letter-spacing: -0.025em;
@@ -65,82 +53,65 @@ def main():
         }
 
         .header-subtitle {
-            color: var(--neutral-700);
+            color: var(--text-color);
+            opacity: 0.8;
             font-size: 1.1rem;
             text-align: center;
             font-weight: 400;
         }
 
         .content-card {
-            background: white;
+            background: var(--background-color);
             padding: 2rem;
             border-radius: 12px;
-            box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
-            border: 1px solid var(--neutral-200);
+            box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1);
+            border: 1px solid rgba(0, 0, 0, 0.1);
             margin-bottom: 1.5rem;
         }
 
         .section-title {
-            color: var(--neutral-800);
+            color: var(--text-color);
             font-size: 1.25rem;
             font-weight: 600;
             margin-bottom: 1.5rem;
             padding-bottom: 0.5rem;
-            border-bottom: 2px solid var(--primary-light);
+            border-bottom: 2px solid rgba(0, 0, 0, 0.1);
         }
 
-        /* Radio button styling */
-        .stRadio > label {
-            color: var(--neutral-700);
-            font-weight: 500;
-            margin-bottom: 0.5rem;
-        }
-
-        .stRadio > div {
-            background: var(--neutral-50);
+        /* Radio and Checkbox containers */
+        .stRadio > div, .stCheckbox > div {
+            background: var(--secondary-background-color);
             padding: 0.75rem 1rem;
             border-radius: 8px;
-            border: 1px solid var(--neutral-200);
+            border: 1px solid rgba(0, 0, 0, 0.1);
             margin: 0.5rem 0;
             transition: all 0.2s ease;
         }
 
-        .stRadio > div:hover {
+        .stRadio > div:hover, .stCheckbox > div:hover {
             border-color: var(--primary-color);
-            background: var(--primary-light);
+            background: color-mix(in srgb, var(--primary-color) 10%, var(--secondary-background-color));
         }
 
-        /* Checkbox styling */
-        .stCheckbox > div {
-            background: var(--neutral-50);
-            padding: 0.75rem 1rem;
-            border-radius: 8px;
-            border: 1px solid var(--neutral-200);
-            transition: all 0.2s ease;
+        /* Results section */
+        .breakdown-item {
+            background: var(--secondary-background-color);
+            color: var(--text-color);
+            padding: 1rem;
+            border-radius: 6px;
+            margin-bottom: 0.5rem;
+            border-left: 4px solid var(--primary-color);
         }
 
-        .stCheckbox > div:hover {
-            border-color: var(--primary-color);
-            background: var(--primary-light);
-        }
-
-        /* Results styling */
-        .results-container {
-            background: white;
-            padding: 1.5rem;
-            border-radius: 8px;
-            border: 1px solid var(--neutral-200);
-        }
-
+        /* Stage display - keep original colors for risk levels */
         .stage-display {
-            background: var(--primary-gradient);
             padding: 2rem;
             border-radius: 8px;
             text-align: center;
             margin-bottom: 1.5rem;
-            color: white;
+            color: white !important;
             transition: all 0.3s ease;
-            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
         }
 
         .stage-display .stage-title {
@@ -156,48 +127,14 @@ def main():
             text-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
         }
 
-        .breakdown-item {
-            background: var(--neutral-50);
-            padding: 1rem;
-            border-radius: 6px;
-            margin-bottom: 0.5rem;
-            border-left: 4px solid var(--primary-color);
-        }
-
-        /* Reference table styling */
-        .custom-table {
-            width: 100%;
-            border-collapse: collapse;
-            margin: 1rem 0;
-            background: white;
-            border-radius: 8px;
-            overflow: hidden;
-        }
-
-        .custom-table th {
-            background: var(--neutral-100);
-            padding: 1rem;
-            text-align: left;
-            font-weight: 600;
-            color: var(--neutral-800);
-        }
-
-        .custom-table td {
-            padding: 1rem;
-            border-top: 1px solid var(--neutral-200);
-        }
-
-        .custom-table tr:hover {
-            background: var(--neutral-50);
-        }
-
-        /* Footer styling */
+        /* Footer */
         .footer {
             text-align: center;
             padding-top: 2rem;
             margin-top: 3rem;
-            border-top: 1px solid var(--neutral-200);
-            color: var(--neutral-700);
+            border-top: 1px solid rgba(0, 0, 0, 0.1);
+            color: var(--text-color);
+            opacity: 0.8;
         }
 
         .footer p {
@@ -205,59 +142,15 @@ def main():
             font-size: 0.875rem;
         }
 
-        /* Tab styling */
-        .stTabs > div > div {
-            gap: 1em;
-        }
-
-        .stTabs > div > div > button {
-            background: var(--neutral-100) !important;
-            border-radius: 6px;
-            border: 1px solid var(--neutral-200) !important;
-            font-weight: 500;
-        }
-
-        .stTabs > div > div > button[data-baseweb="tab"][aria-selected="true"] {
-            background: var(--primary-color) !important;
-            color: white !important;
-            border-color: var(--primary-color) !important;
-        }
-
-        /* Force light mode colors */
-        [data-testid="stAppViewContainer"] {
-            background-color: #ffffff;
-        }
-        
-        .stMarkdown, .stText {
-            color: #0F172A !important;
-        }
-        
-        /* Ensure text contrast in cards and other elements */
-        .content-card {
-            color: #0F172A;
-            background-color: #ffffff;
-        }
-        
-        .breakdown-item {
-            color: #0F172A;
-            background-color: #f8fafc;
-        }
-        
-        /* Ensure stage display text is always visible */
-        .stage-display {
-            color: #ffffff !important;
-            text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
-        }
-        
-        /* Make table text always visible */
+        /* Table styles */
         .stTable {
-            color: #0F172A;
+            color: var(--text-color);
         }
-        
-        /* Ensure info boxes have good contrast */
+
+        /* Info boxes */
         .stAlert {
-            color: #0F172A;
-            background-color: #f8fafc;
+            color: var(--text-color);
+            background: var(--secondary-background-color);
         }
         </style>
     """, unsafe_allow_html=True)
