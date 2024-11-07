@@ -210,4 +210,52 @@ def main():
                 "R2-ISS III": "linear-gradient(135deg, #dc2626 0%, #b91c1c 100%)",
                 "R2-ISS IV": "linear-gradient(135deg, #7f1d1d 0%, #991b1b 100%)"
             }
-            stage_color = stage_colors
+            stage_color = stage_colors.get(results.r2_iss_stage, "linear-gradient(135deg, #2563eb 0%, #1e40af 100%)")
+
+            st.markdown(f"""
+                <div class="stage-display" style="background: {stage_color}">
+                    <div class="stage-title">{results.r2_iss_stage}</div>
+                    <div class="stage-points">Total Points: {results.total_points}</div>
+                </div>
+            """, unsafe_allow_html=True)
+            
+            st.markdown('<div class="section-title">Point Breakdown</div>', unsafe_allow_html=True)
+            for message in results.breakdown_messages:
+                st.markdown(f'<div class="breakdown-item">{message}</div>', unsafe_allow_html=True)
+
+        st.markdown('</div>', unsafe_allow_html=True)
+
+    # Reference Guide
+    with tab2:
+        st.markdown('<div class="content-card">', unsafe_allow_html=True)
+        st.markdown('<div class="section-title">R2-ISS Stage Reference</div>', unsafe_allow_html=True)
+        
+        col1, col2 = st.columns([2, 1])
+        
+        with col1:
+            data = {"Stage": ["R2-ISS I", "R2-ISS II", "R2-ISS III", "R2-ISS IV"], "Points": ["0", "0.5 - 1", "1.5 - 2.5", "3 - 5"]}
+            st.table(data)
+            
+        with col2:
+            st.info("""
+                **Scoring Components:**
+                - β2-Microglobulin levels
+                - Serum Albumin
+                - LDH levels
+                - Cytogenetic abnormalities
+                    - del(17p)
+                    - t(4;14)
+                    - 1q gain/amp
+            """)
+        st.markdown('</div>', unsafe_allow_html=True)
+
+    # Footer
+    st.markdown("""
+        <div class="footer">
+            <p>© 2024 R2-ISS Calculator | Developed by Taya Salman</p>
+            <p>For clinical use. Always verify results with laboratory findings.</p>
+        </div>
+    """, unsafe_allow_html=True)
+
+if __name__ == "__main__":
+    main()
