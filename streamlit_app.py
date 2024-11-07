@@ -2,13 +2,27 @@ import streamlit as st
 from calculator import calculate_r2_iss
 
 def main():
+    # Force light mode and other settings
     st.set_page_config(
         page_title="R2-ISS Staging Calculator",
         layout="centered",
-        initial_sidebar_state="collapsed"
+        initial_sidebar_state="collapsed",
+        menu_items={
+            'Get Help': None,
+            'Report a bug': None,
+            'About': None
+        }
     )
 
-    # Custom CSS for a professional medical look
+    # Force light theme
+    st.markdown("""
+        <script>
+            var elements = window.parent.document.getElementsByTagName('html');
+            elements[0].setAttribute('data-theme', 'light');
+        </script>
+        """, unsafe_allow_html=True)
+
+    # Add this to your existing CSS to ensure text visibility
     st.markdown("""
         <style>
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
@@ -207,6 +221,43 @@ def main():
             background: var(--primary-color) !important;
             color: white !important;
             border-color: var(--primary-color) !important;
+        }
+
+        /* Force light mode colors */
+        [data-testid="stAppViewContainer"] {
+            background-color: #ffffff;
+        }
+        
+        .stMarkdown, .stText {
+            color: #0F172A !important;
+        }
+        
+        /* Ensure text contrast in cards and other elements */
+        .content-card {
+            color: #0F172A;
+            background-color: #ffffff;
+        }
+        
+        .breakdown-item {
+            color: #0F172A;
+            background-color: #f8fafc;
+        }
+        
+        /* Ensure stage display text is always visible */
+        .stage-display {
+            color: #ffffff !important;
+            text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+        }
+        
+        /* Make table text always visible */
+        .stTable {
+            color: #0F172A;
+        }
+        
+        /* Ensure info boxes have good contrast */
+        .stAlert {
+            color: #0F172A;
+            background-color: #f8fafc;
         }
         </style>
     """, unsafe_allow_html=True)
