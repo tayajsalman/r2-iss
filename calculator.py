@@ -28,7 +28,7 @@ def calculate_ldh_points(ldh: str) -> float:
 def calculate_cytogenetic_points(del17p: bool, t414: bool, gain1q: bool) -> float:
     points = 0.0
     if del17p:
-        points += 0.5
+        points += 1.0
     if t414:
         points += 1.0
     if gain1q:
@@ -62,7 +62,7 @@ def generate_breakdown(iss_stage: str, iss_points: float, ldh: str, ldh_points: 
         messages.append("LDH Elevated: Added 1 point")
     
     if del17p:
-        messages.append("High-risk cytogenetics - del(17p): Added 0.5 points")
+        messages.append("High-risk cytogenetics - del(17p): Added 1 point")
     if t414:
         messages.append("High-risk cytogenetics - t(4;14): Added 1 point")
     if gain1q:
