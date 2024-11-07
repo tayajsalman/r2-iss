@@ -159,7 +159,7 @@ def main():
     st.markdown("""
         <div class="main-header">
             <div class="header-title">R2-ISS Staging Calculator</div>
-            <div class="header-subtitle">Professional Multiple Myeloma Staging Tool</div>
+            <div class="header-subtitle">Professional Myeloma Staging Tool</div>
         </div>
     """, unsafe_allow_html=True)
 
