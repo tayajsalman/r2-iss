@@ -255,8 +255,6 @@ def main():
             data = {
                 "Stage": ["R2-ISS I", "R2-ISS II", "R2-ISS III", "R2-ISS IV"],
                 "Points": ["0", "0.5 - 1", "1.5 - 2.5", "3 - 5"],
-                "Prognosis": ["Excellent", "Good", "Intermediate", "Poor"],
-                "Median Survival": [">8 years", "5-8 years", "3-5 years", "<3 years"]
             }
             st.table(data)
             
