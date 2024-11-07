@@ -2,7 +2,7 @@ import streamlit as st
 from calculator import calculate_r2_iss
 
 def main():
-    # Force light mode and other settings
+    # Configure Streamlit page
     st.set_page_config(
         page_title="R2-ISS Staging Calculator",
         layout="centered",
@@ -14,7 +14,7 @@ def main():
         }
     )
 
-    # Force light theme
+    # Set light theme
     st.markdown("""
         <script>
             var elements = window.parent.document.getElementsByTagName('html');
@@ -22,14 +22,14 @@ def main():
         </script>
         """, unsafe_allow_html=True)
 
-    # Add this to your existing CSS to ensure text visibility
+    # Custom CSS for styling
     st.markdown("""
         <style>
-        /* CSS content as in your original code */
+        /* CSS styling here */
         </style>
     """, unsafe_allow_html=True)
 
-    # Header
+    # Header section
     st.markdown("""
         <div class="main-header">
             <div class="header-title">R2-ISS Staging Calculator</div>
@@ -37,6 +37,7 @@ def main():
         </div>
     """, unsafe_allow_html=True)
 
+    # About section
     with st.expander("About R2-ISS"):
         st.info("""
             The Revised International Staging System (R2-ISS) is a validated prognostic tool for multiple myeloma that combines:
@@ -47,6 +48,7 @@ def main():
             This calculator provides accurate staging based on the latest clinical guidelines.
         """)
 
+    # Tabs for calculator and reference guide
     tab1, tab2 = st.tabs(["Calculator", "Reference Guide"])
 
     with tab1:
@@ -54,6 +56,7 @@ def main():
         
         col1, col2 = st.columns([3, 2])
         
+        # Inputs for clinical parameters
         with col1:
             st.markdown('<div class="section-title">Clinical Parameters</div>', unsafe_allow_html=True)
             b2m = st.radio(
@@ -61,13 +64,11 @@ def main():
                 options=["< 3.5 mg/L", "3.5 - 5.5 mg/L", "≥ 5.5 mg/L"],
                 index=0,
             )
-            
             albumin = st.radio(
                 "Albumin",
                 options=["≥ 3.5 g/dL", "< 3.5 g/dL"],
                 index=0,
             )
-            
             ldh = st.radio(
                 "Lactate Dehydrogenase (LDH)",
                 options=[
@@ -87,8 +88,9 @@ def main():
             with col_c:
                 gain1q = st.checkbox("1q gain/amp")
 
+        # Results section
         with col2:
-            # Calculate results and ensure detailed breakdown for ISS Stage II
+            # Calculate R2-ISS results
             results = calculate_r2_iss(
                 b2m=b2m,
                 albumin=albumin,
@@ -98,15 +100,14 @@ def main():
                 gain1q=gain1q
             )
 
-            # Add extra detail for ISS Stage II if the breakdown lacks it
+            # Add specific detail for ISS Stage II if needed
             if results['r2_iss_stage'] == "R2-ISS II" and "ISS Stage II: 1 point" in results['breakdown_messages']:
-                # Replace or update the ISS Stage II message with more detailed criteria
                 results['breakdown_messages'] = [
                     msg.replace("ISS Stage II: 1 point", "ISS Stage II: 1 point (β2M between 3.5 and 5.5 mg/L or Albumin < 3.5 g/dL)")
                     for msg in results['breakdown_messages']
                 ]
 
-            # Determine stage color based on risk
+            # Determine stage color based on risk level
             stage_colors = {
                 "R2-ISS I": "linear-gradient(135deg, #059669 0%, #047857 100%)",
                 "R2-ISS II": "linear-gradient(135deg, #d97706 0%, #b45309 100%)",
@@ -115,6 +116,7 @@ def main():
             }
             stage_color = stage_colors.get(results['r2_iss_stage'], "linear-gradient(135deg, #2563eb 0%, #1e40af 100%)")
 
+            # Display stage and total points
             st.markdown(f"""
                 <div class="stage-display" style="background: {stage_color}">
                     <div class="stage-title">{results['r2_iss_stage']}</div>
@@ -122,12 +124,14 @@ def main():
                 </div>
             """, unsafe_allow_html=True)
             
+            # Display detailed point breakdown
             st.markdown('<div class="section-title">Point Breakdown</div>', unsafe_allow_html=True)
             for message in results['breakdown_messages']:
                 st.markdown(f'<div class="breakdown-item">{message}</div>', unsafe_allow_html=True)
 
         st.markdown('</div>', unsafe_allow_html=True)
 
+    # Reference Guide tab
     with tab2:
         st.markdown('<div class="content-card">', unsafe_allow_html=True)
         st.markdown('<div class="section-title">R2-ISS Stage Reference</div>', unsafe_allow_html=True)
@@ -135,6 +139,7 @@ def main():
         col1, col2 = st.columns([2, 1])
         
         with col1:
+            # Display reference table
             data = {
                 "Stage": ["R2-ISS I", "R2-ISS II", "R2-ISS III", "R2-ISS IV"],
                 "Points": ["0", "0.5 - 1", "1.5 - 2.5", "3 - 5"],
@@ -142,6 +147,7 @@ def main():
             st.table(data)
             
         with col2:
+            # Display scoring components
             st.info("""
                 **Scoring Components:**
                 - β2-Microglobulin levels
@@ -154,6 +160,7 @@ def main():
             """)
         st.markdown('</div>', unsafe_allow_html=True)
 
+    # Footer section
     st.markdown("""
         <div class="footer">
             <p>© 2024 R2-ISS Calculator | Developed by Taya Salman</p>
